@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Video Background */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Content Box */
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Text Styles */
+        .message {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.8);
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeIn 1.5s ease-in-out forwards;
+        }
+
+        .birthday-text {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(255, 255, 0, 1);
+            opacity: 0;
+            animation: dropDown 1.5s ease-in-out forwards, glow 2s infinite alternate;
+        }
+
+        /* Button */
+        .btn {
+            background: #ff4d4d;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 20px;
+            transition: 0.3s;
+            animation: shake 1.5s infinite alternate ease-in-out;
+        }
+
+        .btn:hover {
+            background: #ff6666;
+        }
+
+        /* Cake */
+        .cake {
+            width: 250px;
+            opacity: 0;
+            margin-top: 20px;
+            cursor: pointer;
+            animation: fadeIn 1.5s ease-in-out forwards;
+        }
+
+        /* Keyframe Animations */
+        @keyframes dropDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.8); }
+            to { text-shadow: 2px 2px 20px rgba(255, 255, 0, 1); }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+            100% { transform: translateX(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ?? Video Background -->
+<div class="video-container">
+    <video autoplay loop muted>
+        <source src="rocket.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<!-- ?? Step-by-Step Messages -->
+<div class="content">
+    <h1 class="message" id="step1"> I have something for you... </h1>
+    <button class="btn" onclick="nextStep(2)">Click</button>
+</div>
+
+<!-- JavaScript to Control Steps -->
+<script>
+    let step = 1;
+
+    function nextStep(next) {
+        if (step === 1) {
+            document.getElementById("step1").innerHTML = " It's a special day for me! ";
+            step = 2;
+        } else if (step === 2) {
+            document.getElementById("step1").innerHTML = " Happy Birthday Madam Ji! ";
+            document.getElementById("step1").classList.add("birthday-text");
+            step = 3;
+        } else if (step === 3) {
+            document.querySelector(".btn").innerHTML = "Let's Celebrate!";
+            document.querySelector(".btn").setAttribute("onclick", "showCake()");
+            step = 4;
+        }
+    }
+
+    function showCake() {
+        document.querySelector(".content").innerHTML = `
+            <h1 class="birthday-text"> Let's cut the cake! </h1>
+            <img src="https://i.imgur.com/hRdsqhK.png" class="cake" id="cake" onclick="cutCake()">
+            <p>(Click on the cake to cut it!)</p>
+        `;
+    }
+
+    function cutCake() {
+        document.getElementById("cake").src = "https://i.imgur.com/xxg2R1C.png"; // Replacing with cut cake image
+        document.getElementById("cake").style.animation = "fadeIn 1s ease-in-out forwards";
+        document.querySelector(".content").innerHTML += `
+            <button class="btn" onclick="nextPage()">Next Page</button>
+        `;
+    }
+
+    function nextPage() {
+        document.querySelector(".content").innerHTML = `
+            <h1 class="birthday-text"> Happy Birthday to You!</h1>
+            <p>Wishing you all the happiness in the world. May your day be filled with love, joy, and laughter! ????</p>
+        `;
+    }
+</script>
+
+
+<footer style="position: fixed; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.8); color: white; text-align: center; padding: 10px; font-size: 1.2rem; font-weight: bold;">
+    Made by Fahad For Babhi
+</footer>
+
+
+</body>
+</html>
